@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
+<meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>THE PENTHOUSE — Preview</title>
 <style>
@@ -9015,67 +9016,419 @@ root.__phPhoneMainBooting=false;
 
 
 <script>
-/* ════ FRIDGE MEMO ════ */
 (function(){
-  var FRIDGE_NOTE_SETS=[
-    [
-      {who:'🍝 단테',text:'오늘 저녁 리조또.\n늦으면 용서 없어,\npiccola. ♡'},
-      {who:'💪 건우',text:'우유 누가 다 마심??\n범인 자수해라\nㅡ건우'},
-      {who:'💊 시현',text:'아가씨 비타민\n냉장고 2번째 칸.\n꼭 드세요.'},
-      {who:'🍷 레온',text:'3번째 칸 와인\n건들지 말 것.\n— L.M.'},
-      {who:'🖥️ 레이',text:'내 커피 원두\n만지지 마.\n특히 건우.'},
-      {who:'🔒 엔조',text:'(글씨 없음)\n유저가 좀아하는\n딸기가 채워져 있다'},
-      {who:'👔 이든',text:'외출 시 반드시\n엔조 동행할 것.\n— E.K.'},
-      {who:'🎨 에즈라',text:'아틀리에 문 열지 마.\n특히 형.'}
-    ]
+"use strict";
+var PH_FORCE_FRIDGE_SETS=[
+  [
+    '🍝 단테|오늘 저녁 리조또.\n늦으면 용서 없어,\npiccola. ♡',
+    '💪 건우|우유 누가 다 마심??\n범인 자수해라\nㅡ건우',
+    '💊 시현|아가씨 비타민\n냉장고 2번째 칸.\n꼭 드세요.',
+    '🍷 레온|3번째 칸 와인\n건드리지 말 것.\n— L.M.',
+    '🖥️ 레이|내 커피 원두\n만지지 마.\n특히 건우.',
+    '🔒 엔조|(글씨 없음)\n유저가 좋아하는\n딸기가 채워져 있다',
+    '👔 이든|외출 시 반드시\n엔조 동행할 것.\n— E.K.',
+    '🎨 에즈라|아틀리에 문 열지 마.\n특히 형.'
+  ],
+  [
+    '🍷 레온|E.K.\n체스판 건드린 거\n알고 있어.\n— L.M.\n[[ASIDE:eden:(^^)]]',
+    '👔 이든|레온.\n내 위스키\n서재에서 꺼내지 마.\n— E.K.\n[[ASIDE:leon:(^^)]]',
+    '🖥️ 레이|건우.\n내 원두 또 건들면\n와이파이 비밀번호\n바꾼다.\n[[ASIDE_SKEW:gunwoo:안 돼!!]]',
+    '🍝 단테|오늘 주방\n11시까지 접근 금지.\n서프라이즈 준비 중.\n— 단테♡\n[[ASIDE_SKEW:ezra:우웩]]',
+    '💪 건우|요리사 형님\n배고파요 뭐라도\n남겨주세요 진심으로\nㅡ건우\n[[ASIDE:dante:Va bene~]]',
+    '💊 시현|에즈라 씨.\n식사 다섯 번째\n리마인드입니다.\n꼭 드세요.\n[[ASIDE:ezra:...응.]]',
+    '🎨 에즈라|형.\n아틀리에\n노크도 안 됨.',
+    '🍷 레온|서재 체스판\n진행 중.\n건들지 말 것.\n— L.M.'
+  ],
+  [
+    '👔 이든|건우, 너.\n지금 어디야.\n휴대폰 충전 좀 해.\n— E.K.',
+    '🍝 단테|레온. 2번 칸\n트러플 파스타\npiccola 꺼야.\n손대면 진심 화내~',
+    '🖥️ 레이|에즈라.\n새벽 4시 기타\n이어폰 써라.\nps. 코드는 좋았음.\n[[ASIDE:ezra-small:이어폰이 고장났어]]',
+    '💪 건우|시현아\n스케줄 미리 좀\n공유해줘요 진짜.\nㅡ건우\n[[ASIDE:sihyun-tight:회장님 와인\n건들지 마세요]]',
+    '🔒 엔조|(글씨 없음)\n냉동실 아이스팩 2개.\n외출 대비.',
+    '🎨 에즈라|단테 아저씨.\n음식 감사.\n근데 매운 거\n빼줘요. - 에즈라\n[[ASIDE:dante:형이라니까?]]',
+    '🍷 레온|어젯밤\n와인 페어링 좋았어.\n다시 Barolo.\n— L.M.',
+    '💊 시현|사장님.\n아가씨 복약 일정\n재공유 드렸습니다.\n확인 부탁드려요.'
+  ],
+  [
+    '💪 건우|레이 동생\n어제 같이 뛰어서\n좋았어 다음에도!!\nㅡ건우\n[[ASIDE:rei:...봐서.]]',
+    '🖥️ 레이|냉장고 3번째 칸.\n네가 좋아하는 거.',
+    '🎨 에즈라|건우 형.\n어제 고마웠어.\n말은 못 했는데.\n- 에즈라\n...적당히들 좀 해.\n[[ASIDE:gunwoo:귀여운 애기 같으니]]\n[[ASIDE:dante:에지라서 애기인가?]]',
+    '🍝 단테|piccola,\n오늘 뭔가 기대해.\n늦게 자지 마.\n— 너만의 단테♡\n[[ASIDE_SKEW:gunwoo:우웩]]\n[[ASIDE:dante-nowrap:저번부터 누구지? ^^]]',
+    '💊 시현|건우 씨,\n회장님 와인\n절대 건들지 마세요.\n제발. ㅎㅎ',
+    '👔 이든|누구든\n꼬맹이 보면\n밥 좀 먹여.\n— E.K.\n[[ASIDE:dante:Ma certo~]]',
+    '🔒 엔조|(글씨 없음)\n건우가 두고 간 단백질 바가 정리되어 있고,\n유저 것은 따로\n구분해두었다',
+    '🍷 레온|Min lille.\n오늘 셀러 들러.\n좋은 와인이 새로 왔어.\n— L.M.'
+  ],
+  [
+    '👔 이든|꼬맹이.\n오늘 바람 많이 분다.\n나가면 코트 챙겨.\n— E.K.',
+    '🍷 레온|오늘 새 Barolo 왔어.\n관심 있으면\n저녁에 셀러로 와.\n— L.M.',
+    '🍝 단테|오늘 저녁은 7시~\n식당으로 전부 다 와.\n늦으면 식어! 늦지 마.',
+    '💪 건우|오늘 날씨 러닝 딱이야!!\n같이 갈 사람!!\n진심으로 기다림!!\nㅡ건우\n[[ASIDE_SKEW:gunwoo-sm:아무도 안가냐...]]',
+    '💊 시현|오늘 일교차 큽니다.\n외출 시 겉옷 꼭 챙기세요.\n아가씨 특히요 ㅎㅎ',
+    '🖥️ 레이|오후 자리 비움.\n급하면 메시지.',
+    '🔒 엔조|(글씨 없음)\n현관 우산꽂이에\n우산이 2개 추가되어 있다',
+    '🎨 에즈라|창문 열지 마.\n그림 마르는 중.\n- 에즈라'
+  ],
+  [
+    '💪 건우|레온 형님\n체스판 진짜 건들면\n어떻게 되는 거예요?\n진심이에요? ㅡ건우',
+    '🍷 레온|건우.\n진심이야.\n— L.M.',
+    '🎨 에즈라|엔조 형.\n54층 와이파이\n속도 좀.\n- 에즈라',
+    '🔒 엔조|(글씨 없음)\n에즈라 방 앞에\n라우터가 교체되어 있다',
+    '👔 이든|에지.\n밥 먹어.\n시현이 형 리마인드\n기다리지 말고.\n— E.K.\n[[ASIDE:ezra-tight:그렇게 부르지 말랬지]]',
+    '💊 시현|회장님.\n오늘 오후 스케줄\n조정됩니다.\n확인 부탁드려요.',
+    '🖥️ 레이|단테.\n내 원두 다 쓰면 채워.\n한 번 더 비면\n주방에 번호키 단다.',
+    '🍝 단테|레이.\n오늘 저녁은 널 위한 특별 메뉴야.\n번호키는 참아줘.\n— 단테'
+  ],
+  [
+    '👔 이든|꼬맹이.\n오늘 어디 가면\n연락해.\n— E.K.',
+    '🍷 레온|Min lille.\n오늘 저녁 셀러에서.\n서두르지 않아도 돼.\n— L.M.',
+    '🍝 단테|piccola♡\n2번째 칸은 네 거야.\n건우가 물어보면\n없다고 해.\n— 단테\n[[ASIDE_SKEW:gunwoo:형님 미워요.]]',
+    '💪 건우|오늘 저녁 같이 먹자!!\n기다린다!!\nㅡ 건우',
+    '💊 시현|아가씨.\n오늘 일정\n정리해두었습니다.\n확인해 주세요.',
+    '🖥️ 레이|일찍 자.',
+    '🔒 엔조|(글씨 없음)\n유저 방 앞에\n우산이 놓여 있다.\n비 예보 대비.',
+    '🎨 에즈라|아틀리에 와도 돼.\n…노크는 해.\n- 에즈라'
+  ]
+];
+var PACKAGE_ITEM_POOL=[
+  {icon:'📦',item:'에티오피아 예가체프 원두 1kg'},
+  {icon:'📦',item:'캐모마일 티 세트'},
+  {icon:'📦',item:'나이키 에어포스 1 (W 240)'},
+  {icon:'📦',item:'올리오 칼리 엑스트라 버진 올리브오일'},
+  {icon:'📦',item:'무가당 그릭요거트 6입'},
+  {icon:'📦',item:'프로틴 바 버라이어티팩'},
+  {icon:'📦',item:'탄산수 24캔'},
+  {icon:'📦',item:'세탁 세제 리필 2L'},
+  {icon:'📦',item:'저자극 섬유유연제'},
+  {icon:'🎁',item:'실버 커프스 세트'},
+  {icon:'🎁',item:'향수 샘플 키트'},
+  {icon:'💌',item:'손편지 봉투'}
+];
+var PACKAGE_SENDER_POOL=[
+  '블루보틀','아마존 프레시','스탁엑스','이탈리아 직배송',
+  '뉴욕 리빙마켓','맨해튼 파머스 딜리버리','발신자 불명','트라이베카 퀵배송'
+];
+var PACKAGE_RECIPIENT_POOL=['이든','레온','엔조','건우','레이','시현','단테','에즈라','유저','수신인 불명'];
+var PACKAGE_ARRIVAL_POOL=['방금 도착','3분 전 도착','9분 전 도착','14분 전 도착','오늘 도착','분류 완료'];
+var LAUNDRY_FINDING_POOL=[
+  {text:'건우 후드 집업 소매에 토마토 소스 얼룩',note:'유저: 또 주방에서 급하게 먹었나?'},
+  {text:'레이 검은 후드 주머니에서 카페 영수증',note:'유저: 새벽에 또 밖에 다녀왔나?'},
+  {text:'엔조 셔츠 커프에 실밥 풀림',note:'유저: 손이 많이 갔던 날 같네.'},
+  {text:'시현 셔츠 칼라에 은은한 허브향',note:'유저: 아침 차 준비하다 묻은 듯.'},
+  {text:'단테 앞치마에 와인 자국 한 방울',note:'유저: 저녁 준비 시작했구나.'},
+  {text:'에즈라 티셔츠에 옅은 물감 얼룩',note:'유저: 오늘도 밤샘 작업했나 보다.'},
+  {text:'레온 셔츠 소매에 향수 잔향',note:'유저: 아침 미팅 다녀온 티가 난다.'},
+  {text:'이든 셔츠 단추 하나 느슨함',note:'유저: 출근 전에 다시 고쳐야겠다.'}
+];
+function pickFrom(arr){
+  if(!arr||!arr.length)return '';
+  return arr[Math.floor(Math.random()*arr.length)];
+}
+function pickDistinct(arr,count){
+  var src=(arr||[]).slice();
+  var out=[];
+  while(src.length && out.length<count){
+    var idx=Math.floor(Math.random()*src.length);
+    out.push(src[idx]);
+    src.splice(idx,1);
+  }
+  return out;
+}
+function generatePackageRows(){
+  var itemPool=(Array.isArray(PACKAGE_ITEM_POOL)&&PACKAGE_ITEM_POOL.length)?PACKAGE_ITEM_POOL:[
+    {icon:'📦',item:'에티오피아 예가체프 원두 1kg'},
+    {icon:'📦',item:'캐모마일 티 세트'},
+    {icon:'📦',item:'나이키 에어포스 1 (W 240)'},
+    {icon:'📦',item:'올리오 칼리 엑스트라 버진 올리브오일'}
   ];
-  var lastSet=-1;
-  function pickSet(){
-    if(!FRIDGE_NOTE_SETS.length)return null;
-    var idx=Math.floor(Math.random()*FRIDGE_NOTE_SETS.length);
-    if(FRIDGE_NOTE_SETS.length>1 && idx===lastSet){
-      idx=(idx+1+Math.floor(Math.random()*(FRIDGE_NOTE_SETS.length-1)))%FRIDGE_NOTE_SETS.length;
+  var senderPool=(Array.isArray(PACKAGE_SENDER_POOL)&&PACKAGE_SENDER_POOL.length)?PACKAGE_SENDER_POOL:['발신자 불명'];
+  var recipientPool=(Array.isArray(PACKAGE_RECIPIENT_POOL)&&PACKAGE_RECIPIENT_POOL.length)?PACKAGE_RECIPIENT_POOL:['수신인 불명'];
+  var arrivalPool=(Array.isArray(PACKAGE_ARRIVAL_POOL)&&PACKAGE_ARRIVAL_POOL.length)?PACKAGE_ARRIVAL_POOL:['오늘 도착'];
+  var count=6+Math.floor(Math.random()*2);
+  var picked=pickDistinct(itemPool,count);
+  return picked.map(function(it){
+    var sender=pickFrom(senderPool)||'발신자 불명';
+    var recipient=pickFrom(recipientPool)||'수신인 불명';
+    if(Math.random()<0.12)recipient='수신인 불명';
+    if(Math.random()<0.08)sender='발신자 불명';
+    var arrival=pickFrom(arrivalPool)||'오늘 도착';
+    return [it.icon||'📦',it.item||'택배',arrival,sender,recipient].join('|');
+  });
+}
+function machineStatusLine(label){
+  var st='running';
+  var detail='';
+  if(label==='다리미 존'){
+    st=(Math.random()<0.7?'empty':'done');
+    detail=(st==='empty'?'비어 있음':'예열 완료');
+    return [label,st,detail].join('|');
+  }
+  var r=Math.random();
+  if(r<0.56){ st='running'; detail=(8+Math.floor(Math.random()*49))+'분 남음'; }
+  else if(r<0.82){ st='done'; detail='완료'; }
+  else { st='empty'; detail='비어 있음'; }
+  return [label,st,detail].join('|');
+}
+function generateLaundryRows(){
+  var findingPool=(Array.isArray(LAUNDRY_FINDING_POOL)&&LAUNDRY_FINDING_POOL.length)?LAUNDRY_FINDING_POOL:[
+    {text:'건우 후드 집업 소매에 토마토 소스 얼룩',note:'유저: 또 주방에서 급하게 먹었나?'},
+    {text:'레이 검은 후드 주머니에서 카페 영수증',note:'유저: 새벽에 또 밖에 다녀왔나?'},
+    {text:'엔조 셔츠 커프에 실밥 풀림',note:'유저: 손이 많이 갔던 날 같네.'}
+  ];
+  var rows=[
+    machineStatusLine('세탁기 1'),
+    machineStatusLine('세탁기 2'),
+    machineStatusLine('건조기'),
+    machineStatusLine('다리미 존')
+  ];
+  var findings=pickDistinct(findingPool,3+Math.floor(Math.random()*2));
+  findings.forEach(function(f){
+    rows.push((f.text||'미확인 빨래')+'|'+(f.note||'유저: 나중에 확인.'));
+  });
+  return rows;
+}
+var FRIDGE_THEME_BY_CLASS={
+  'fn-dante':{bg:'#f5dad5',mag:'#c85550',rot:'-2deg'},
+  'fn-gunwoo':{bg:'#fde4cc',mag:'#e8812a',rot:'1.5deg'},
+  'fn-sihyun':{bg:'#dfeee0',mag:'#7aaa7e',rot:'-1deg'},
+  'fn-leon':{bg:'#f2d8dc',mag:'#a0404e',rot:'2.5deg'},
+  'fn-rei':{bg:'#d6eaf2',mag:'#6ba3c2',rot:'-0.5deg'},
+  'fn-enzo':{bg:'#e5e7e9',mag:'#8a9099',rot:'0deg'},
+  'fn-eden':{bg:'#f5efd8',mag:'#c4a352',rot:'-1.8deg'},
+  'fn-ezra':{bg:'#ecdff5',mag:'#9B59B6',rot:'1.2deg'}
+};
+function norm(s){return String(s || "").toLowerCase().replace(/\s+/g, "");}
+function whoClass(who){
+  var n=norm(who);
+  if(/단테|dante|bellini|dantebellini/.test(n))return 'fn-dante';
+  if(/건우|gunwoo|geonwoo|hangunwoo|hangeonwoo/.test(n))return 'fn-gunwoo';
+  if(/시현|sihyun|sihyeon|kwonsihyun|kwonsihyeon/.test(n))return 'fn-sihyun';
+  if(/레온|leon|marchetti|leonmarchetti/.test(n))return 'fn-leon';
+  if(/레이|rei|hayase|hayaserei|하야세/.test(n))return 'fn-rei';
+  if(/엔조|enzo|carvalho|enzocarvalho/.test(n))return 'fn-enzo';
+  if(/이든|ethan|eden|ethankade|edenkade/.test(n))return 'fn-eden';
+  if(/에즈라|애즈라|ezra|ezrakade/.test(n))return 'fn-ezra';
+  return '';
+}
+
+const laundryPool = [{"icon":"👕","text":"건우 후드 집업 소매에 토마토 소스 얼룩","note":"또 주방에서 급하게 먹었나?"},{"icon":"👕","text":"레이 검은 후드 주머니에서 카페 영수증","note":"새벽에 또 밖에 다녀왔나?"},{"icon":"👕","text":"엔조 셔츠 커프에 실밥 풀림","note":"손이 많이 갔던 날 같네."},{"icon":"👕","text":"시현 셔츠 칼라에 은은한 허브향","note":"아침 차 준비하다 묻은 듯."},{"icon":"👕","text":"단테 앞치마에 와인 자국 한 방울","note":"저녁 준비 시작했구나."},{"icon":"👕","text":"에즈라 티셔츠에 옅은 물감 얼룩","note":"오늘도 밤샘 작업했나 보다."},{"icon":"👕","text":"레온 셔츠 소매에 향수 잔향","note":"아침 미팅 다녀온 티가 난다."},{"icon":"👕","text":"이든 셔츠 단추 하나 느슨함","note":"출근 전에 다시 고쳐야겠다."},{"icon":"👕","text":"건우의 회색 집업이 유저 빨래 바구니에 들어 있다","note":"저번에 빌려준 거?"},{"icon":"🧣","text":"유저 스카프에서 낯선 향수 냄새. 레온의 톰 포드?","note":"언제 묻은 거지"},{"icon":"🧥","text":"엔조의 택티컬 셔츠 — 시현이 별도 세탁 표시를 붙여놨다","note":""},{"icon":"🩳","text":"레이의 트레이닝 바지와 후드 — 커피 얼룩이 곳곳에","note":""},{"icon":"👗","text":"유저 옷 사이에서 이든의 와이셔츠가 한 장","note":"왜 여기에?"},{"icon":"👔","text":"이든의 셔츠 주머니에서 반으로 접힌 영수증이 나왔다. 품목은 아이스크림 두 개","note":"혼자 다 먹는다더니 두 개나 샀네."},{"icon":"🪡","text":"이든의 셔츠 옆에 여분 단추와 실이 놓여 있다. 메모에는 ‘내가 할 거야. 손대지 마.’","note":"바늘에 실은 아직 못 꿰었는데."},{"icon":"🧥","text":"유저가 걸쳤던 이든의 재킷만 따로 옷걸이에 걸려 있다. 소매는 접힌 그대로다","note":"내 팔 길이에 맞춰 접어준 건가."},{"icon":"🧣","text":"레온의 캐시미어 머플러에 ‘건조기 금지’라고 적힌 시현의 라벨이 붙어 있다","note":"그 밑에 건우가 밑줄을 세 번 그었다."},{"icon":"🍷","text":"레온의 셔츠 옆에 얼룩 제거제가 놓여 있다. 와인 자국은 소매 끝에 아주 조금","note":"단테가 먼저 발견하고 두고 간 모양이다."},{"icon":"🧤","text":"레온의 코트 주머니에서 가죽 장갑 한 짝이 나왔다. 다른 한 짝은 유저 외투 안에 있다","note":"그날 손이 차갑다고 했더니."},{"icon":"🧥","text":"엔조의 검은 셔츠들이 단추 방향까지 맞춰 접혀 있다. 한 장에만 작은 수선 표시가 있다","note":"어디를 꿰매야 하는지 한눈에 알겠다."},{"icon":"🧤","text":"엔조의 장갑 옆에 세탁 방법을 적은 쪽지가 놓여 있다. 마지막 줄은 ‘감사합니다.’","note":"보고서에도 없는 말이 여기 있네."},{"icon":"🧦","text":"건조가 끝난 유저 양말이 엔조의 수건 위에 가지런히 놓여 있다. 집게까지 색깔별로 정리돼 있다","note":"지나가다 정리했을 뿐이라고 하겠지."},{"icon":"🩳","text":"건우의 운동복 주머니에서 세탁된 운동 기록표가 나왔다. 목표 횟수만 선명하게 남았다","note":"빨래보다 운동이 먼저였구나."},{"icon":"🧦","text":"건우의 양말 한 짝이 또 없다. 세탁기 위에는 ‘발이 두 개인데 왜 하나냐’라는 메모","note":"나머지 한 짝은 후드 안에 있었다."},{"icon":"👕","text":"건우의 후드 끈에 작은 매듭이 묶여 있다. 유저가 빌려 입을 때 줄여놓은 길이 그대로다","note":"풀면 되는데 그냥 입고 다녔네."},{"icon":"☕","text":"레이의 후드 주머니에서 원두 봉투를 집던 클립이 나왔다. 단테가 찾던 빨간 클립이다","note":"커피와 관련되면 일단 레이 주머니부터."},{"icon":"🎧","text":"레이의 검은 바지에서 이어폰 케이스가 발견됐다. 시현이 ‘세탁 전 구조’라고 적어뒀다","note":"이번에는 물에 들어가기 전에 찾았다."},{"icon":"🧺","text":"레이의 빨래 바구니에 ‘오늘은 커피 안 쏟았어.’라는 쪽지가 붙어 있다","note":"후드 소매는 확인하고 말한 걸까."},{"icon":"👔","text":"시현의 셔츠마다 세탁 라벨이 바깥으로 접혀 있다. 유저 옷에도 같은 표시가 붙어 있다","note":"내 것까지 미리 확인해둔 거네."},{"icon":"🧺","text":"시현이 접어둔 수건 더미에 작은 메모. ‘맨 위는 아가씨 것. 건우 씨는 두 번째 칸입니다.’","note":"굳이 이름을 적은 데는 이유가 있겠지."},{"icon":"🪡","text":"유저 옷의 떨어진 단추가 다시 달려 있다. 시현의 반짇고리는 아직 테이블 위에 열려 있다","note":"고맙다고 하기 전에 벌써 다음 일을 보러 갔다."},{"icon":"🍝","text":"단테의 앞치마 주머니에서 접힌 레시피가 나왔다. 설탕 양 옆에 유저 이름이 적혀 있다","note":"내가 덜 달게 해달라고 했던 그 디저트다."},{"icon":"🧑‍🍳","text":"단테의 앞치마에 밀가루 손자국이 두 개. 옆에 걸린 유저 앞치마에도 같은 자국이 있다","note":"요리 수업보다 장난을 더 오래 했나."},{"icon":"🧺","text":"단테가 주방 행주를 따로 모아두고 ‘건우, 운동 수건 여기 넣지 마.’라고 적어놨다","note":"아래에 ‘알았어요!!’라는 답장이 추가됐다."},{"icon":"🎨","text":"에즈라의 청바지 주머니에서 짧아진 목탄과 지우개가 나왔다. 흰 수건과는 따로 놓여 있다","note":"이번에는 본인이 먼저 빼둔 모양이다."},{"icon":"👕","text":"에즈라의 티셔츠에 묻은 파란 물감 위로 보라색이 덧칠돼 있다. ‘이건 지우지 마.’라는 메모","note":"얼룩인지 작업인지 먼저 물어봐야겠다."},{"icon":"🧷","text":"유저 옷에서 떨어진 작은 장식이 에즈라의 세탁망에 꽂혀 있다. 옆에는 ‘네 거.’ 두 글자","note":"버리지 않고 따로 챙겨뒀네."}];
+const fridge = document.querySelector('#fridge-notes');
+const packages = document.querySelector('.pkg-list');
+const machines = document.querySelector('.laundry-grid');
+const laundryItems = machines && machines.closest('.section').querySelector('.laundry-items');
+const bag = [];
+let lastSet = -1;
+let lastPackages = [];
+let lastLaundry = [];
+let lastFindings = [];
+const laundryBag = [];
+
+const style = document.createElement('style');
+style.id = 'ph-household-reroll-style';
+style.textContent = `
+  [data-ph-household] .sec-label {display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+  [data-ph-household] .ph-hh-reroll {margin-left:auto;min-height:44px;padding:7px 12px;background:#14120c;border:1px solid #554629;border-radius:5px;color:#c9a84c;font:inherit;font-size:12px;letter-spacing:0;text-transform:none;cursor:pointer}
+  [data-ph-household] [data-hh-focus] {cursor:pointer}
+  [data-ph-household] [data-hh-focus]:focus-visible,[data-ph-household] .ph-hh-reroll:focus-visible {outline:2px solid #c9a84c;outline-offset:3px}
+  [data-ph-household] .ph-hh-asides {margin-top:7px;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px 8px}
+  [data-ph-household] .ph-hh-aside {max-width:100%;white-space:pre-line;word-break:keep-all;overflow-wrap:break-word;color:#333;font-size:20px;line-height:1.5}
+  [data-ph-household] .ph-hh-aside-skew {transform:rotate(-5deg)}
+  [data-ph-household] .ph-hh-aside.fn-ezra-small,[data-ph-household] .ph-hh-aside.fn-gunwoo-sm {font-size:19px}
+  [data-ph-household] .ph-hh-aside.fn-sihyun-tight,[data-ph-household] .ph-hh-aside.fn-ezra-tight {letter-spacing:-.5px}
+  [data-ph-household="fridge"] .fridge-notes {max-width:960px;gap:18px 16px;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:1fr;align-items:stretch}
+  [data-ph-household="fridge"] .fridge-note {padding:14px 12px 14px 18px;min-width:0;min-height:150px}
+  [data-ph-household="fridge"] .fn-who {font-size:15px;margin-bottom:7px}
+  [data-ph-household="fridge"] .fn-text {font-size:22px;line-height:1.5;white-space:pre-line;word-break:keep-all;overflow-wrap:break-word}
+  [data-ph-household="fridge"] .fn-text.fn-gunwoo,[data-ph-household="fridge"] .fn-text.fn-sihyun {font-size:19px}
+  [data-ph-household="fridge"] .fn-text.fn-eden,[data-ph-household="fridge"] .fn-text.fn-rei {font-size:21px}
+  [data-ph-household="fridge"] .fn-text.fn-dante {font-size:26px}
+  [data-ph-household="fridge"] .fn-text.fn-ezra,[data-ph-household="fridge"] .fn-text.fn-leon {font-size:24px}
+  [data-ph-household="laundry"] .laundry-finding {font-size:14px;line-height:1.7;word-break:keep-all;overflow-wrap:break-word}
+  [data-ph-household="laundry"] .laundry-finding em {font-size:13px}
+  @media (max-width:1000px) {
+    [data-ph-household="fridge"] .fridge-notes {grid-template-columns:repeat(2,minmax(0,1fr));max-width:640px}
+  }
+  @media (max-width:560px) {
+    [data-ph-household="fridge"] .fridge {padding:20px 16px}
+    [data-ph-household="fridge"] .fridge-notes {grid-template-columns:minmax(0,1fr);max-width:340px;gap:18px}
+  }
+`;
+document.head.appendChild(style);
+
+function node(tag, className, text) {
+  const el = document.createElement(tag);
+  el.className = className;
+  if (text !== undefined) el.textContent = text;
+  return el;
+}
+
+function nextSet() {
+  // A shuffled deck shows every existing set before cycling, without an adjacent repeat.
+  if (!bag.length) {
+    for (let i = 0; i < PH_FORCE_FRIDGE_SETS.length; i++) bag.push(i);
+    for (let i = bag.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [bag[i], bag[j]] = [bag[j], bag[i]];
     }
-    lastSet=idx;
-    return FRIDGE_NOTE_SETS[idx];
+    if (bag[0] === lastSet && bag.length > 1) [bag[0], bag[1]] = [bag[1], bag[0]];
   }
-  function whoClass(who){
-    var w=String(who||'');
-    if(/단테|Dante|dante/.test(w))return 'fn-dante';
-    if(/건우|Gunwoo|gunwoo/.test(w))return 'fn-gunwoo';
-    if(/시현|Sihyun|sihyun/.test(w))return 'fn-sihyun';
-    if(/레온|Leon|leon/.test(w))return 'fn-leon';
-    if(/레이|Rei|rei/.test(w))return 'fn-rei';
-    if(/엔조|Enzo|enzo/.test(w))return 'fn-enzo';
-    if(/이든|Ethan|ethan|Eden|eden/.test(w))return 'fn-eden';
-    if(/에즈라|Ezra|ezra/.test(w))return 'fn-ezra';
-    return '';
+  lastSet = bag.shift();
+  return PH_FORCE_FRIDGE_SETS[lastSet];
+}
+
+function parseNote(raw) {
+  const asides = [];
+  // Some handwritten replies span multiple lines inside a single ASIDE token.
+  const main = raw.replace(/\{\{user\}\}/gi, '유저').replace(/\[\[(ASIDE|ASIDE_SKEW):([a-z0-9_-]+):([\s\S]*?)\]\]/gi,
+    (_, kind, token, text) => {
+      asides.push({kind, token, text: text.trim()});
+      return '';
+    }).trim();
+  return {main, asides};
+}
+
+function renderFridge() {
+  const rows = nextSet();
+  const notes = fridge.querySelectorAll('.fridge-note');
+  rows.forEach((row, i) => {
+    const note = notes[i];
+    if (!note) return;
+    const split = row.indexOf('|');
+    const who = row.slice(0, split);
+    const parsed = parseNote(row.slice(split + 1));
+    const cls = whoClass(who);
+    const theme = FRIDGE_THEME_BY_CLASS[cls];
+    note.style.background = theme.bg;
+    note.style.setProperty('--r', theme.rot);
+    const magnet = node('div', 'fridge-magnet');
+    magnet.style.background = theme.mag;
+    note.replaceChildren(magnet, node('div', 'fn-who', who), node('div', 'fn-text ' + cls, parsed.main));
+    if (parsed.asides.length) {
+      const replies = node('div', 'ph-hh-asides');
+      parsed.asides.forEach(aside => {
+        const token = aside.token.replace(/^fn-/, '');
+        replies.appendChild(node('div', 'ph-hh-aside fn-' + token.split('-')[0] +
+          ' fn-' + token + (aside.kind === 'ASIDE_SKEW' ? ' ph-hh-aside-skew' : ''), aside.text));
+      });
+      note.appendChild(replies);
+    }
+  });
+  fridge.dataset.setIndex = String(lastSet);
+}
+
+function differentRows(makeRows, previous) {
+  let rows;
+  for (let i = 0; i < 6; i++) {
+    rows = makeRows();
+    if (rows.join('\n') !== previous.join('\n')) return rows;
   }
-  function esc(v){
-    return String(v||'')
-      .replace(/&/g,'&amp;')
-      .replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;');
+  return rows.slice(1).concat(rows[0]);
+}
+
+function renderPackages() {
+  const rows = differentRows(generatePackageRows, lastPackages);
+  const fragment = document.createDocumentFragment();
+  rows.forEach(line => {
+    const [icon, item, arrival, sender, recipient] = line.split('|');
+    const card = node('div', 'pkg-item' + (/불명/.test(sender + recipient) ? ' pkg-mystery' : ''));
+    const info = node('div', 'pkg-info');
+    info.append(node('div', 'pkg-name', item), node('div', 'pkg-detail', arrival + ' · ' + sender));
+    card.append(node('div', 'pkg-icon', icon), info, node('div', 'pkg-from', recipient));
+    fragment.appendChild(card);
+  });
+  packages.replaceChildren(fragment);
+  lastPackages = rows;
+}
+
+function renderLaundry() {
+  const rows = ['세탁기 1', '세탁기 2', '건조기', '다리미 존'].map(machineStatusLine);
+  const cards = machines.querySelectorAll('.laundry-machine');
+  for (let i = 0; i < 4; i++) {
+    const label = rows[i].split('|')[0];
+    for (let retry = 0; rows[i] === lastLaundry[i] && retry < 6; retry++) rows[i] = machineStatusLine(label);
+    if (rows[i] === lastLaundry[i]) {
+      rows[i] = label + (rows[i].split('|')[1] === 'done' ? '|empty|비어 있음' : '|done|' + (i === 3 ? '예열 완료' : '완료'));
+    }
+    const [, status, detail] = rows[i].split('|');
+    const statusEl = cards[i].querySelector('.laundry-machine-status');
+    statusEl.className = 'laundry-machine-status ' + status;
+    statusEl.textContent = status === 'running' ? (i === 2 ? '건조 중 · ' : '세탁 중 · ') + detail : detail;
   }
-  function applyFridgeSet(){
-    var set=pickSet();
-    if(!set)return;
-    var notes=document.querySelectorAll('#fridge-notes .fridge-note');
-    if(!notes.length)return;
-    notes.forEach(function(note,i){
-      var data=set[i%set.length];
-      var whoEl=note.querySelector('.fn-who');
-      var textEl=note.querySelector('.fn-text');
-      if(!whoEl||!textEl)return;
-      whoEl.textContent=data.who;
-      textEl.className='fn-text '+whoClass(data.who);
-      textEl.innerHTML=esc(data.text).replace(/\n/g,'<br>');
+  const findings = [];
+  // Deal unseen findings first; don't repeat the previous view at a deck boundary.
+  while (findings.length < 5) {
+    if (!laundryBag.length) {
+      const available = laundryPool.filter(item => !lastFindings.includes(item) && !findings.includes(item));
+      laundryBag.push(...pickDistinct(available, available.length));
+    }
+    findings.push(laundryBag.shift());
+  }
+  const fragment = document.createDocumentFragment();
+  findings.forEach(item => {
+    const card = node('div', 'laundry-item laundry-finding');
+    const body = node('div', 'laundry-finding-body');
+    body.appendChild(node('span', 'laundry-finding-text', item.text));
+    if (item.note) body.append(' ', node('em', '', '> ' + item.note));
+    card.append(node('div', 'laundry-item-icon', item.icon), body);
+    fragment.appendChild(card);
+  });
+  laundryItems.replaceChildren(fragment);
+  lastLaundry = rows;
+  lastFindings = findings;
+}
+
+function bindSection(kind, anchor, selector, render) {
+  if (!anchor) return;
+  const section = anchor.closest('.section');
+  if (!section || section.dataset.phHousehold) return;
+  section.dataset.phHousehold = kind;
+  section.dataset.hhRevision = '0';
+  const button = node('button', 'ph-hh-reroll', '↻ 다시 보기');
+  button.type = 'button';
+  const names = {fridge: '냉장고 메모', packages: '택배', laundry: '세탁실'};
+  button.setAttribute('aria-label', names[kind] + ' 다시 보기');
+  section.querySelector('.sec-label').appendChild(button);
+
+  function markCards() {
+    section.querySelectorAll(selector).forEach((card, i) => {
+      card.dataset.hhFocus = kind + '-' + i;
+      card.tabIndex = 0;
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-label', names[kind] + ' 다른 내용 보기');
     });
   }
-  applyFridgeSet();
-  document.querySelectorAll('[data-panel="fridge"],[data-hh="fridge"],.fridge-tab').forEach(function(t){
-    t.addEventListener('click',function(){ setTimeout(applyFridgeSet,40); });
+  function refresh() {
+    const active = document.activeElement;
+    const focusKey = section.contains(active) && active.dataset.hhFocus;
+    render();
+    markCards();
+    section.dataset.hhRevision = String(Number(section.dataset.hhRevision) + 1);
+    if (focusKey) {
+      const replacement = Array.from(section.querySelectorAll('[data-hh-focus]')).find(el => el.dataset.hhFocus === focusKey);
+      (replacement || button).focus({preventScroll: true});
+    }
+  }
+  section.addEventListener('click', event => {
+    if (!(event.target instanceof Element)) return;
+    const target = event.target.closest('[data-hh-focus],.ph-hh-reroll');
+    if (!target || !section.contains(target)) return;
+    const selection = window.getSelection();
+    if (selection && !selection.isCollapsed) return;
+    refresh();
   });
+  section.addEventListener('keydown', event => {
+    if (event.repeat || (event.key !== 'Enter' && event.key !== ' ')) return;
+    if (!event.target.matches('[data-hh-focus]')) return;
+    event.preventDefault();
+    refresh();
+  });
+  refresh();
+}
+
+bindSection('fridge', fridge, '.fridge-note', renderFridge);
+bindSection('packages', packages, '.pkg-item', renderPackages);
+if (laundryItems) bindSection('laundry', machines, '.laundry-machine,.laundry-item', renderLaundry);
+
 })();
 
 /* ════ NYC CITY LIGHTS (Option B: 창문 반짝임) ════ */
