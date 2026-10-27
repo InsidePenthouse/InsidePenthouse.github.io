@@ -9052,7 +9052,7 @@ var PH_FORCE_FRIDGE_SETS=[
   [
     '💪 건우|레이 동생\n어제 같이 뛰어서\n좋았어 다음에도!!\nㅡ건우\n[[ASIDE:rei:...봐서.]]',
     '🖥️ 레이|냉장고 3번째 칸.\n네가 좋아하는 거.',
-    '🎨 에즈라|건우 형.\n어제 고마웠어.\n말은 못 했는데.\n- 에즈라\n...적당히들 좀 해.\n[[ASIDE:gunwoo:귀여운 애기 같으니]]\n[[ASIDE:dante:에지라서 애기인가?]]',
+    '🎨 에즈라|건우 형.\n어제 고마웠어.\n말은 못 했는데. - 에즈라\n[[ASIDE:gunwoo:귀여운 애기 같으니]]\n[[ASIDE:dante:에지라서 애기인가?]]\n[[ASIDE_FINAL:ezra:...적당히들 좀 해.]]',
     '🍝 단테|piccola,\n오늘 뭔가 기대해.\n늦게 자지 마.\n— 너만의 단테♡\n[[ASIDE_SKEW:gunwoo:우웩]]\n[[ASIDE:dante-nowrap:저번부터 누구지? ^^]]',
     '💊 시현|건우 씨,\n회장님 와인\n절대 건들지 마세요.\n제발. ㅎㅎ',
     '👔 이든|누구든\n꼬맹이 보면\n밥 좀 먹여.\n— E.K.\n[[ASIDE:dante:Ma certo~]]',
@@ -9082,7 +9082,7 @@ var PH_FORCE_FRIDGE_SETS=[
   [
     '👔 이든|꼬맹이.\n오늘 어디 가면\n연락해.\n— E.K.',
     '🍷 레온|Min lille.\n오늘 저녁 셀러에서.\n서두르지 않아도 돼.\n— L.M.',
-    '🍝 단테|piccola♡\n2번째 칸은 네 거야.\n건우가 물어보면\n없다고 해.\n— 단테\n[[ASIDE_SKEW:gunwoo:형님 미워요.]]',
+    '🍝 단테|piccola♡\n2번째 칸은 네 거야.\n건우가 물어보면\n없다고 해. — 단테\n[[ASIDE_SKEW:gunwoo:형님 미워요.]]',
     '💪 건우|오늘 저녁 같이 먹자!!\n기다린다!!\nㅡ 건우',
     '💊 시현|아가씨.\n오늘 일정\n정리해두었습니다.\n확인해 주세요.',
     '🖥️ 레이|일찍 자.',
@@ -9235,14 +9235,24 @@ style.textContent = `
   [data-ph-household] .ph-hh-aside-skew {transform:rotate(-5deg)}
   [data-ph-household] .ph-hh-aside.fn-ezra-small,[data-ph-household] .ph-hh-aside.fn-gunwoo-sm {font-size:19px}
   [data-ph-household] .ph-hh-aside.fn-sihyun-tight,[data-ph-household] .ph-hh-aside.fn-ezra-tight {letter-spacing:-.5px}
-  [data-ph-household="fridge"] .fridge-notes {max-width:960px;gap:18px 16px;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:1fr;align-items:stretch}
-  [data-ph-household="fridge"] .fridge-note {padding:14px 12px 14px 18px;min-width:0;min-height:150px}
-  [data-ph-household="fridge"] .fn-who {font-size:15px;margin-bottom:7px}
-  [data-ph-household="fridge"] .fn-text {font-size:22px;line-height:1.5;white-space:pre-line;word-break:keep-all;overflow-wrap:break-word}
-  [data-ph-household="fridge"] .fn-text.fn-gunwoo,[data-ph-household="fridge"] .fn-text.fn-sihyun {font-size:19px}
-  [data-ph-household="fridge"] .fn-text.fn-eden,[data-ph-household="fridge"] .fn-text.fn-rei {font-size:21px}
-  [data-ph-household="fridge"] .fn-text.fn-dante {font-size:26px}
-  [data-ph-household="fridge"] .fn-text.fn-ezra,[data-ph-household="fridge"] .fn-text.fn-leon {font-size:24px}
+  [data-ph-household="fridge"] .fridge-notes {max-width:960px;gap:18px 16px;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:auto;align-items:start}
+  [data-ph-household="fridge"] .fridge-note {padding:14px 12px 14px 18px;min-width:0;min-height:150px;height:auto;align-self:start;box-sizing:border-box;display:flex;flex-direction:column;--ph-memo-scale:1;--ph-memo-leading:1.5;--ph-memo-tracking:0px;--ph-memo-gap:7px}
+  [data-ph-household="fridge"] .fridge-note > :not(.fridge-magnet) {flex-shrink:0}
+  [data-ph-household="fridge"] .fn-who {font-size:15px;line-height:1.65;margin-bottom:7px}
+  [data-ph-household="fridge"] .fn-text {--ph-memo-font:22px;font-size:calc(var(--ph-memo-font) * var(--ph-memo-scale));line-height:var(--ph-memo-leading);letter-spacing:var(--ph-memo-tracking);white-space:pre-line;word-break:keep-all;overflow-wrap:break-word}
+  [data-ph-household="fridge"] .fn-text.fn-gunwoo,[data-ph-household="fridge"] .fn-text.fn-sihyun {--ph-memo-font:19px}
+  [data-ph-household="fridge"] .fn-text.fn-gunwoo {line-height:1.65}
+  [data-ph-household="fridge"] .fn-text.fn-eden,[data-ph-household="fridge"] .fn-text.fn-rei {--ph-memo-font:21px}
+  [data-ph-household="fridge"] .fn-text.fn-dante {--ph-memo-font:26px;line-height:1.4}
+  [data-ph-household="fridge"] .fn-text.fn-ezra,[data-ph-household="fridge"] .fn-text.fn-leon {--ph-memo-font:24px}
+  [data-ph-household="fridge"] .ph-hh-asides {margin-top:var(--ph-memo-gap);gap:4px 8px}
+  [data-ph-household="fridge"] .ph-hh-aside {--ph-memo-aside-font:20px;font-size:max(16px,calc(var(--ph-memo-aside-font) * var(--ph-memo-scale)));line-height:var(--ph-memo-leading);letter-spacing:var(--ph-memo-tracking)}
+  [data-ph-household="fridge"] .ph-hh-aside.fn-ezra-small,[data-ph-household="fridge"] .ph-hh-aside.fn-gunwoo-sm {--ph-memo-aside-font:19px}
+  [data-ph-household="fridge"] .ph-hh-final {margin-top:4px;padding-top:4px}
+  [data-ph-household="fridge"] .fridge-note[data-memo-readable="ezra"] .fn-text {font-size:22px}
+  [data-ph-household="fridge"] .fridge-note[data-memo-readable="dante"] .fn-text {font-size:26px}
+  [data-ph-household="fridge"] .fridge-note[data-memo-readable="ezra"] .ph-hh-aside,[data-ph-household="fridge"] .fridge-note[data-memo-readable="dante"] .ph-hh-aside {font-size:20px;letter-spacing:0}
+  [data-ph-household="fridge"] .fridge-note[data-memo-readable="ezra"] .ph-hh-aside.fn-dante,[data-ph-household="fridge"] .fridge-note[data-memo-readable="dante"] .ph-hh-aside.fn-dante {font-size:26px}
   [data-ph-household="laundry"] .laundry-finding {font-size:14px;line-height:1.7;word-break:keep-all;overflow-wrap:break-word}
   [data-ph-household="laundry"] .laundry-finding em {font-size:13px}
   @media (max-width:1000px) {
@@ -9279,12 +9289,20 @@ function nextSet() {
 function parseNote(raw) {
   const asides = [];
   // Some handwritten replies span multiple lines inside a single ASIDE token.
-  const main = raw.replace(/\{\{user\}\}/gi, '유저').replace(/\[\[(ASIDE|ASIDE_SKEW):([a-z0-9_-]+):([\s\S]*?)\]\]/gi,
+  const main = raw.replace(/\{\{user\}\}/gi, '유저').replace(/\[\[(ASIDE|ASIDE_SKEW|ASIDE_FINAL):([a-z0-9_-]+):([\s\S]*?)\]\]/gi,
     (_, kind, token, text) => {
       asides.push({kind, token, text: text.trim()});
       return '';
     }).trim();
   return {main, asides};
+}
+
+function fitFridgeNotes() {
+  if (!fridge) return;
+  // Each paper follows its content; remove legacy font shrinking on reused notes.
+  fridge.querySelectorAll('.fridge-note').forEach(note => {
+    note.removeAttribute('data-memo-fit');
+  });
 }
 
 function renderFridge() {
@@ -9298,6 +9316,9 @@ function renderFridge() {
     const parsed = parseNote(row.slice(split + 1));
     const cls = whoClass(who);
     const theme = FRIDGE_THEME_BY_CLASS[cls];
+    const finalReply = parsed.asides.some(aside => aside.kind === 'ASIDE_FINAL');
+    const longDante = cls === 'fn-dante' && parsed.asides.length && parsed.main.startsWith('piccola');
+    note.dataset.memoReadable = finalReply ? 'ezra' : longDante ? 'dante' : '';
     note.style.background = theme.bg;
     note.style.setProperty('--r', theme.rot);
     const magnet = node('div', 'fridge-magnet');
@@ -9306,14 +9327,19 @@ function renderFridge() {
     if (parsed.asides.length) {
       const replies = node('div', 'ph-hh-asides');
       parsed.asides.forEach(aside => {
+        if (aside.kind === 'ASIDE_FINAL') return;
         const token = aside.token.replace(/^fn-/, '');
         replies.appendChild(node('div', 'ph-hh-aside fn-' + token.split('-')[0] +
           ' fn-' + token + (aside.kind === 'ASIDE_SKEW' ? ' ph-hh-aside-skew' : ''), aside.text));
       });
       note.appendChild(replies);
     }
+    parsed.asides.filter(aside => aside.kind === 'ASIDE_FINAL').forEach(aside => {
+      note.appendChild(node('div', 'fn-text ph-hh-final fn-' + aside.token.replace(/^fn-/, '').split('-')[0], aside.text));
+    });
   });
   fridge.dataset.setIndex = String(lastSet);
+  fitFridgeNotes();
 }
 
 function differentRows(makeRows, previous) {
@@ -9426,6 +9452,17 @@ function bindSection(kind, anchor, selector, render) {
 }
 
 bindSection('fridge', fridge, '.fridge-note', renderFridge);
+if (fridge) {
+  if (document.fonts) document.fonts.ready.then(fitFridgeNotes);
+  if (window.ResizeObserver) {
+    let memoWidth = fridge.clientWidth;
+    new ResizeObserver(() => {
+      if (fridge.clientWidth === memoWidth) return;
+      memoWidth = fridge.clientWidth;
+      fitFridgeNotes();
+    }).observe(fridge);
+  }
+}
 bindSection('packages', packages, '.pkg-item', renderPackages);
 if (laundryItems) bindSection('laundry', machines, '.laundry-machine,.laundry-item', renderLaundry);
 
